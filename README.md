@@ -1,5 +1,6 @@
 # MPCI
 Quantify methylation haplotypes in a region
+________________________________________
 # MPCI Calculation Script
 This script calculates the Methylation Pattern Consistency Index (MPCI), a novel metric for quantifying consistent methylation patterns across sequencing reads in differentially methylated regions (DMRs). The script also includes helper functions for calculating signed Manhattan similarity and assigning weights based on methylation status.
 ________________________________________
@@ -8,6 +9,7 @@ ________________________________________
 ________________________________________
 # Functions
 1. give_sign_for_weights(x_1, x_2)
+
 •	Purpose: Assigns weights based on the average methylation status of two rows.
 •	Input: Two binary vectors (x_1, x_2) representing methylation status of CpG sites (1 = methylated, 0 = unmethylated).
 •	Output:
