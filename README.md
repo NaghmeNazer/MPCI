@@ -11,21 +11,37 @@ ________________________________________
 1. give_sign_for_weights(x_1, x_2)
 
 •	Purpose: Assigns weights based on the average methylation status of two rows.
+
 •	Input: Two binary vectors (x_1, x_2) representing methylation status of CpG sites (1 = methylated, 0 = unmethylated).
+
 •	Output:
+
 o	1 if the average methylation is > 0.5 (more methylated).
+
 o	-1 if the average methylation is < 0.5 (more unmethylated).
+
 o	Randomly 1 or -1 if the average methylation is exactly 0.5.
+
 2. signed_manhattan_sim(binary_dmr)
+
 •	Purpose: Calculates the signed Manhattan similarity for a binary DMR matrix.
+
 •	Input: A binary matrix (binary_dmr) where rows represent sequencing reads and columns represent CpG sites.
+
 •	Output: A weighted average of pairwise similarities between rows.
+
 3. MPCI(binary_dmr)
+
 •	Purpose: Calculates the Methylation Pattern Consistency Index (MPCI) for a binary DMR matrix.
+
 •	Input: A binary matrix (binary_dmr) where rows represent sequencing reads and columns represent CpG sites.
+
 •	Output: The MPCI value, ranging from -1 to +1, where:
+
 o	Positive values indicate consistent methylation.
+
 o	Negative values indicate consistent unmethylation.
+
 o	Values near zero indicate random methylation patterns.
 ________________________________________
 # Usage
