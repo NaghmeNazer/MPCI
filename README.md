@@ -47,36 +47,58 @@ ________________________________________
 # Usage
 1. Synthetic Data
 The script includes examples of synthetic binary DMR matrices to test the MPCI function:
+
 •	fully_methylated: A fully methylated DMR.
+
 •	mixed_methylation_1: A DMR with mixed methylation patterns.
+
 •	mostly_unmethylated: A mostly unmethylated DMR with some random methylation.
+
 •	fully_unmethylated: A fully unmethylated DMR.
+
 •	mixed_methylation_2: A DMR with mixed methylation patterns.
+
 •	mostly_methylated: A mostly methylated DMR with some random unmethylation.
+
 To test MPCI on these matrices, simply run the corresponding lines in the script.
+
 2. Real Data
 To calculate MPCI for a real binary DMR matrix:
+
 1.	Load the binary DMR data from a CSV file using read.csv().
+
 2.	Remove unnecessary columns (e.g., real_binary_dmr$X <- NULL).
+
 3.	Pass the cleaned matrix to the MPCI() function.
 ________________________________________
 # Creating a Binary DMR Matrix from Bisulfite Sequencing Reads
 To create a binary DMR matrix from bisulfite sequencing reads:
+
 1.	Extract Methylation Calls
+
 2.	Convert to Binary Format: For each read, create a binary vector where:
+
 o	1 represents a methylated CpG.
+
 o	0 represents an unmethylated CpG.
+
 o	Missing or ambiguous calls can be represented as NA.
+
 3.	Build the Matrix: Combine these binary vectors into a matrix where:
+
 o	Rows represent sequencing reads.
+
 o	Columns represent CpG sites.
+
 4.	Save as CSV: Save the binary matrix as a CSV file for input into the MPCI script.
 ________________________________________
 # Output
-•	The script outputs the MPCI value for each binary DMR matrix.
+The script outputs the MPCI value for each binary DMR matrix.
 ________________________________________
 # Notes
+
 •	Ensure that the input binary DMR matrix is properly formatted (rows = reads, columns = CpG sites).
+
 •	The script handles edge cases and returns NA if similarity cannot be calculated.
 ________________________________________
 # Contact
