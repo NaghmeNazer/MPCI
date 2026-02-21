@@ -1,106 +1,51 @@
-# MPCI
-Quantify methylation haplotypes in a region
+# Methylation Pattern Analysis Suite
+
+This suite provides a comprehensive collection of R scripts for analyzing DNA methylation patterns at the haplotype level. It includes functions for calculating various methylation metrics (MPCI, MHL, uMHL, dMHL, PDR, FDRP, Epipoly, Entropy), performing classification analyses with SVM, and evaluating detection sensitivity in cell type classification, liquid biopsy analysis, and simualted disease detection.
+
+
 ________________________________________
-# MPCI Calculation Script
-This script calculates the Methylation Pattern Consistency Index (MPCI), a novel metric for quantifying consistent methylation patterns across sequencing reads in differentially methylated regions (DMRs). The script also includes helper functions for calculating signed Manhattan similarity and assigning weights based on methylation status.
+## Requirements
+
+- R (version 4.0 or higher)
+- Required R packages: `data.table`, `tidyverse`, `caret`, `e1071`, `pROC`, `FactoMineR`, `factoextra`, `ggplot2`, `doParallel`, `patchwork`, `gridExtra`, `ggpubr`, `broom`, `readr`, `tidyr`, `dplyr`
+
 ________________________________________
-# Requirements
-•	R (version 4.0 or higher)
+## Common Workflow
+
+1. **Generate Binary Matrices** from PAT files using provided functions
+2. **Calculate Methylation Metrics** (MPCI, MHL, uMHL, dMHL, etc.)
+3. **Prepare Data** for classification by transposing and labeling
+4. **Run Classification** with nested cross-validation SVM
+5. **Visualize Results** with publication-ready plots
+6. **Perform Statistical Tests** (Wilcoxon) for comparisons
+
 ________________________________________
-# Functions
-1. give_sign_for_weights(x_1, x_2)
+## Repository Structure
 
-•	Purpose: Assigns weights based on the average methylation status of two rows.
+## MPCI_calculation
+- `MPCI_calculation.R` - Core functions for MPCI calculation
 
-•	Input: Two binary vectors (x_1, x_2) representing methylation status of CpG sites (1 = methylated, 0 = unmethylated).
+## cell_type_classification_contexts
+- `random_regions_all_metric_generation_CD4_CD8.R` - Full metric generation for CD4/CD8 across random regions
+- `Guo_chr22_all_metric_generation_CD4_CD8.R` - Metric generation for Guo MHB regions on chr22
+- `multi_tissue_random_regions_metric_generation.R` - Metric generation across multiple tissues
+- `metric_generation_Guo_MHBs.R` - Basic MPCI, MHL, uMHL, dMHL, Beta for Guo MHB regions
+- `Guo_MHBs_to_cpg_id_efficient_processing.R` - Convert genomic coordinates to CpG IDs
+- `CD4_CD8_all_metric_full_pipeline_pca_nested_cv_svm_linear_random_regions.R` - Full pipeline with PCA and nested CV SVM
+- `CD4_CD8_linear_svm_nested_cv_classification_wilcox_test.R` - SVM classification with Wilcoxon tests and region filtering
+- `Guo_MPCI_MHL_CD4_CD8_classifier_wilcoxon.R` - MPCI vs MHL comparison with Wilcoxon tests
 
-•	Output:
+## external_liquid_biopsy_data
+- `GSE262275_high_cov_regions_finding.R` - Identify high-coverage regions from PAT files
+- `GSE262275_metric_generation.R` - Generate methylation metrics for high-coverage regions
+- `GSE262275_svm_nested_classifier_wilcoxon.R` - SVM classification comparing PRE vs POST treatment
 
-o	1 if the average methylation is > 0.5 (more methylated).
+## disease_detection_contexts
+- `simulate_spike_with_healthy_separate_cfdna.R` - Simulate spiked-in methylation signals by mixing tissue reads into cfDNA background
+- `spike_nested_cv_svm_classifier.R` - SVM classification on simulated data across multiple spike ratios
 
-o	-1 if the average methylation is < 0.5 (more unmethylated).
-
-o	Randomly 1 or -1 if the average methylation is exactly 0.5.
-
-2. signed_manhattan_sim(binary_dmr)
-
-•	Purpose: Calculates the signed Manhattan similarity for a binary DMR matrix.
-
-•	Input: A binary matrix (binary_dmr) where rows represent sequencing reads and columns represent CpG sites.
-
-•	Output: A weighted average of pairwise similarities between rows.
-
-3. MPCI(binary_dmr)
-
-•	Purpose: Calculates the Methylation Pattern Consistency Index (MPCI) for a binary DMR matrix.
-
-•	Input: A binary matrix (binary_dmr) where rows represent sequencing reads and columns represent CpG sites.
-
-•	Output: The MPCI value, ranging from -1 to +1, where:
-
-o	Positive values indicate consistent methylation.
-
-o	Negative values indicate consistent unmethylation.
-
-o	Values near zero indicate random methylation patterns.
 ________________________________________
-# Usage
-1. Synthetic Data
-The script includes examples of synthetic binary DMR matrices to test the MPCI function:
+## Contact
 
-•	fully_methylated: A fully methylated DMR.
-
-•	mixed_methylation_1: A DMR with mixed methylation patterns.
-
-•	mostly_unmethylated: A mostly unmethylated DMR with some random methylation.
-
-•	fully_unmethylated: A fully unmethylated DMR.
-
-•	mixed_methylation_2: A DMR with mixed methylation patterns.
-
-•	mostly_methylated: A mostly methylated DMR with some random unmethylation.
-
-To test MPCI on these matrices, simply run the corresponding lines in the script.
-
-2. Real Data
-To calculate MPCI for a real binary DMR matrix:
-
-1.	Load the binary DMR data from a CSV file using read.csv().
-
-2.	Remove unnecessary columns (e.g., real_binary_dmr$X <- NULL).
-
-3.	Pass the cleaned matrix to the MPCI() function.
-________________________________________
-# Creating a Binary DMR Matrix from Bisulfite Sequencing Reads
-To create a binary DMR matrix from bisulfite sequencing reads:
-
-1.	Extract Methylation Calls
-
-2.	Convert to Binary Format: For each read, create a binary vector where:
-
-o	1 represents a methylated CpG.
-
-o	0 represents an unmethylated CpG.
-
-o	Missing or ambiguous calls can be represented as NA.
-
-3.	Build the Matrix: Combine these binary vectors into a matrix where:
-
-o	Rows represent sequencing reads.
-
-o	Columns represent CpG sites.
-
-4.	Save as CSV: Save the binary matrix as a CSV file for input into the MPCI script.
-________________________________________
-# Output
-The script outputs the MPCI value for each binary DMR matrix.
-________________________________________
-# Notes
-
-•	Ensure that the input binary DMR matrix is properly formatted (rows = reads, columns = CpG sites).
-
-•	The script handles edge cases and returns NA if similarity cannot be calculated.
-________________________________________
-# Contact
 naghme93@gmail.com
 
